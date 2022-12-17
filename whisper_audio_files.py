@@ -1,19 +1,22 @@
 import os
 import whisper
 
-
-audioPath = "vl_mp3/LinADI 2a - Lineare Algebra und Diskrete Mathematik für die Informatik.mp3"
-
 model = whisper.load_model("medium")
 
-directory = 'vl_mp3'
+mp3_dir = 'vl_mp3'
+txt_dir = 'vl_txt'
 
-for file in os.listdir(directory):
-    filename = os.fsdecode(file)
-    if filename.endswith(".mp3"):
+if not os.path.exists(txt_dir):
+    os.mkdir(txt_dir)
+
+for mp3 in os.listdir(mp3_dir):
+    mp3_filename = os.fsdecode(mp3)
+    if mp3_filename.endswith(".mp3"):
         result = model.transcribe(os.path.join(
-            directory, filename), language='de', fp16=False)
-        text_file = open(filename.replace('mp3', 'txt'), "w")
+            mp3_dir, mp3_filename), language='de', fp16=False)
+        txt_file_name = mp3_filename.replace('mp3', 'txt')
+
+        text_file = open(os.path.join(txt_dir, txt_file_name), "w")
         text_file.write(result['text'])
         text_file.close()
         continue
