@@ -21,4 +21,3 @@ for mp3 in os.listdir(mp3_dir):
         text_file = open(txt_file_path, "w")
         text_file.write(result['text'])
         text_file.close()
-        continue
